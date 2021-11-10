@@ -1,52 +1,63 @@
 const Tour = require('../models/tourModel');
 
-// Create a checkBody middleware
-exports.checkBody = (req, res, next) => {
-  // check if body contain tyhe name and price property
-  if (!req.body.name || !req.body.price) {
-    // if not send back 400 (bad request)
-    return res.status(400).json({
+exports.getAllTours = async (req, res) => {
+  try {
+    const tours = await Tour.find();
+
+    res.status(200).json({
+      status: 'success',
+      results: tours.length,
+      data: {
+        tours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
       status: 'fail',
-      message: 'Missing name or price',
+      message: err,
     });
   }
-  // Add it to the post handler stack
-  next();
 };
 
-exports.getAllTours = (req, res) => {
-  console.log(req.requestTime);
-  res.status(200).json({
-    status: 'success',
-    requestedAt: req.requestTime,
-    // results: tours.length,
-    // data: {
-    //   tours,
-    // },
-  });
+exports.getTour = async (req, res) => {
+  try {
+    const tour = await Tour.findById(req.params.id);
+    // Tour.findOne({_id: req.params.id})
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
 };
 
-exports.getTour = (req, res) => {
-  console.log(req.params);
-  // Multiply by one convert the string into number
-  const id = req.params.id * 1;
-  // const tour = tours.find((el) => el.id === id);
+exports.createTour = async (req, res) => {
+  try {
+    // We used to do like this....
+    // const newTour = new Tour({})
+    // newTour.save()
 
-  // res.status(200).json({
-  //   status: 'success',
-  //   data: {
-  //     tour,
-  //   },
-  // });
-};
+    const newTour = await Tour.create(req.body);
 
-exports.createTour = (req, res) => {
-  res.status(201).json({
-    status: 'success',
-    // data: {
-    //   tour: newTour,
-    // },
-  });
+    res.status(201).json({
+      status: 'success',
+      data: {
+        tour: newTour,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Invalid data sent!',
+    });
+  }
 };
 
 exports.updateTour = (req, res) => {
