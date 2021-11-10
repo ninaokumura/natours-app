@@ -10,7 +10,6 @@ const DB = process.env.DATABASE.replace(
 );
 
 // Connect to remote database
-
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -18,25 +17,6 @@ mongoose
     // useFindAndModify: false,
   })
   .then(() => console.log('DB conection successful!'));
-
-const tourSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'A tour must have a name'],
-    unique: true,
-  },
-  rating: {
-    type: Number,
-    default: 4.5,
-  },
-  price: {
-    type: Number,
-    required: [true, 'A tour must have a price'],
-  },
-});
-
-// Model
-const Tours = mongoose.model('Tour', tourSchema);
 
 // Starting server
 const port = process.env.PORT || 3000;
