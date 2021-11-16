@@ -55,6 +55,14 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  // Putting this passwordChanged one second in the past will then garantee that the token is always created after the password has been changed.
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 // Instance method
 userSchema.methods.correctPassword = async function (
   candidatePassword,
