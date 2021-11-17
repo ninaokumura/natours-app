@@ -43,6 +43,11 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 userSchema.pre('save', async function (next) {
@@ -60,6 +65,13 @@ userSchema.pre('save', function (next) {
 
   // Putting this passwordChanged one second in the past will then garantee that the token is always created after the password has been changed.
   this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+// Regulare expression to find all the words or strings that starts with find /^find/
+userSchema.pre(/^find/, function (next) {
+  // This points to the current query
+  this.find({ active: { $ne: false } });
   next();
 });
 
