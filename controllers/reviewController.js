@@ -1,7 +1,6 @@
 // create the handlers to create reviews
 const Review = require('../models/reviewModel');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
   const reviews = await Review.find();
