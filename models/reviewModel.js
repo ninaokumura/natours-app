@@ -38,10 +38,15 @@ const reviewSchema = new mongoose.Schema(
 
 // Populate all docs -> this one will add some extra queries, and in this case its actually two queries (for the tours and for the user) in order to find the matching doc
 reviewSchema.pre(/^find/, function (next) {
+  // this.populate({
+  //   path: 'tour',
+  //   select: 'name',
+  // }).populate({
+  //   path: 'user',
+  //   select: 'name photo',
+  // });
+
   this.populate({
-    path: 'tour',
-    select: 'name',
-  }).populate({
     path: 'user',
     select: 'name photo',
   });

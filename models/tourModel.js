@@ -121,6 +121,14 @@ const tourSchema = new mongoose.Schema(
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
+
+// Virtual populate
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id', // This _id which is how it's called in the local model, is called 'tour' in the foreign model. This is how we connect these two models together.
+});
+
 // Document middleware: runs before the .save() and .create() => pre save hook
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
