@@ -35,6 +35,9 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+// Preventing duplicating reviews
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
 // Query middleware
 
 // Populate all docs -> this one will add some extra queries, and in this case its actually two queries (for the tours and for the user) in order to find the matching doc
