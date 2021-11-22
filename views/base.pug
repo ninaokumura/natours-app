@@ -8,14 +8,14 @@ html(lang='en')
     link(rel='shortcut icon' type='image/png' href='img/favicon.png')
     link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700'
       )
-    title Natours | Exciting tours for adventurous people
+    title Natours | #{title}
 
   body
     // HEADER
     include _header
-  // Content
-  main.main
-    h1= tour
+    // Content
+    block content
+      h1 This is the placeholder heading
 
     // Footer
     include _footer
