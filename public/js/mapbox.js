@@ -1,8 +1,10 @@
 /* eslint-disable */
-
 export const displayMap = (locations) => {
+  console.log({ mapboxgl });
+
   mapboxgl.accessToken =
     'pk.eyJ1IjoibmluYS1va3VtdXJhIiwiYSI6ImNrd2JiM2E5MDhmZ3Iydm10d3ltbnA4eGoifQ.dsWvfK38CCk0NExH1KmYmQ';
+
   const map = new mapboxgl.Map({
     container: 'map', // container ID
     style: 'mapbox://styles/nina-okumura/ckwbeqjwq960715lu0a6kt14y', // style URL
