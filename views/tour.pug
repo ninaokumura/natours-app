@@ -3,9 +3,11 @@ include _reviewCard
 
 //- Whatever we will write here will be appended to the contents that is already in the block
 block append head
+  
   script(defer src='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js')
   link(defer href='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css' rel='stylesheet')
-  script(defer src='/js/mapbox.js')   
+  script(defer src='/js/mapbox.js') 
+
 
     
 mixin overviewBox(label, text, icon)
