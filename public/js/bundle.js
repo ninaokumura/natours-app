@@ -9185,7 +9185,7 @@ var _login = require("./login");
 document.addEventListener('DOMContentLoaded', function () {
   // DOM ELEMENTS
   var mapBox = document.getElementById('map');
-  var loginForm = document.querySelector('.form');
+  var loginForm = document.querySelector('.form--login');
   var logoutBtn = document.querySelector('.nav__el--logout'); // DELEGATION
 
   if (mapBox) {
