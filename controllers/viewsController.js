@@ -53,7 +53,7 @@ exports.getAccount = (req, res) => {
 };
 
 exports.updateUserData = catchAsync(async (req, res, next) => {
-  const uupdatedUser = await User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     req.user.id,
     {
       name: req.body.name,
@@ -65,6 +65,6 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
     }
   );
   res.status(200).render('account', {
-    user: uupdatedUser,
+    user: updatedUser,
   });
 });
