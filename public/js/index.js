@@ -2,8 +2,7 @@
 // index.js file is to get data from the user interface and then delegate the actions
 import '@babel/polyfill';
 import { displayMap } from './mapbox';
-import { login } from './login';
-import { logout } from './login';
+import { login, logout } from './login';
 
 document.addEventListener('DOMContentLoaded', () => {
   // DOM ELEMENTS
