@@ -174,7 +174,9 @@ exports.restrictTo =
 // Reset password
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on posted email
+
   const user = await User.findOne({ email: req.body.email });
+
   if (!user) {
     return next(new AppError('There is no user with this email address.', 404));
   }
@@ -183,26 +185,20 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // The validateBeforeSave will deactivate all the validaters that we specified in our schema.
   await user.save({ validateBeforeSave: false });
 
-  // 3) Send it back to user's email
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
-
-  const message = `Forgot your pasword? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
-
   try {
-    // await sendEmail({
-    //   email: user.email,
-    //   subject: 'Your password reset token (valid for 10 min',
-    //   message,
-    // });
+    // 3) Send it back to user's email
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/resetPassword/${resetToken}`;
+
+    await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
       status: 'success',
       message: 'Token sent to email!',
     });
   } catch (err) {
-    user.createPasswordResetToken = undefined;
+    user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
 
@@ -223,9 +219,10 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     .digest('hex');
 
   const user = await User.findOne({
-    createPasswordResetToken: hashedToken,
+    passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
+
   // 2) If token has not expired and there is a user -> set the new password
   if (!user) {
     return next(new AppError('Token is invalid or has expired', 400));
