@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
-import { showAlert } from './alert';
+import { showAlert } from './alerts';
 // updateData and call in index.js
 
 // type is either 'passqword' or 'data'

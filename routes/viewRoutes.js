@@ -5,7 +5,7 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-// router.use(authController.isLoggedIn);
+router.use(viewsController.alerts);
 
 // Rendering the pug template
 router.get('/', authController.isLoggedIn, viewsController.getOverview);
