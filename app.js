@@ -19,6 +19,8 @@ const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
+
+app.enable('trust proxy');
 // set the template engine
 app.set('view engine', 'pug');
 // we use path here because we do not always know weather a path thatw e receive from somwhere already has a slash or not.
